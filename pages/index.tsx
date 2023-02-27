@@ -24,13 +24,16 @@ export async function getStaticProps() {
 }
 
 export default function Home({ data }) {
-  const [query, setQuery] = useState("");
-  const [regionFilter, setRegionFilter] = useState("")
+  const [query, setQuery] = useState(""); // state for query
+  const [regionFilter, setRegionFilter] = useState("") // state for region filter
 
   const filteredData = data.filter((country) => {
+    // check if current country's region matches the selected region
     if (country.region.toLowerCase().includes(regionFilter.toLowerCase())) {
+      // check if the country's name matches query
       return (country.name.common.toLowerCase().includes(query.toLowerCase()) || country.name.official.toLowerCase().includes(query.toLowerCase()))
     } else {
+      // if flase return false so that country get skipped
       return false
     }
   })
