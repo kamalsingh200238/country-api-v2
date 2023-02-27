@@ -25,8 +25,17 @@ export async function getStaticProps() {
 
 export default function Home({ data }) {
   const [query, setQuery] = useState("");
+  const [regionFilter, setRegionFilter] = useState("")
 
-  console.log({ query })
+  const filteredData = data.filter((country) => {
+    if (country.region.toLowerCase().includes(regionFilter.toLowerCase())) {
+      return (country.name.common.toLowerCase().includes(query.toLowerCase()) || country.name.official.toLowerCase().includes(query.toLowerCase()))
+    } else {
+      return false
+    }
+  })
+
+  console.log({ query, data, filteredData })
 
   return (
     <>
@@ -39,7 +48,9 @@ export default function Home({ data }) {
         <input type="search" value={query} onChange={(e) => {
           setQuery(e.target.value)
         }} />
-        {/* {JSON.stringify(data)} */}
+        <div>
+          {filteredData.map(country => <div key={country.name.common}>{country.name.official}</div>)}
+        </div>
       </main>
     </>
   )
