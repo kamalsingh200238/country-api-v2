@@ -1,5 +1,6 @@
 import Head from 'next/head'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { CountryData } from '@/types';
 
 export async function getStaticProps() {
   let resp;
@@ -23,9 +24,16 @@ export async function getStaticProps() {
   }
 }
 
-export default function Home({ data }) {
+interface Props {
+  data: CountryData[]
+}
+
+export default function Home({ data }: Props) {
   const [query, setQuery] = useState(""); // state for query
   const [regionFilter, setRegionFilter] = useState("") // state for region filter
+
+  const [paginationActivePage, setPaginationActivePage] = useState(1)
+
 
   const filteredData = data.filter((country) => {
     // check if current country's region matches the selected region
@@ -38,7 +46,26 @@ export default function Home({ data }) {
     }
   })
 
-  console.log({ query, data, filteredData })
+  const itemsPerPagination = 12
+
+  const paginationLength = Math.ceil(filteredData.length / itemsPerPagination)
+
+  const indexOfLastPost = paginationActivePage * itemsPerPagination
+  const indexOfFirstPost = indexOfLastPost - itemsPerPagination
+
+  const tempData = filteredData.slice(indexOfFirstPost, indexOfLastPost)
+
+  console.log({ query, data, filteredData });
+
+  const numbers: number[] = []
+
+  for (let i = 1; i <= paginationLength; i++) {
+    numbers.push(i)
+  }
+
+  useEffect(()=>{
+    setPaginationActivePage(1)
+  }, [query, regionFilter])
 
   return (
     <>
@@ -52,7 +79,10 @@ export default function Home({ data }) {
           setQuery(e.target.value)
         }} />
         <div>
-          {filteredData.map(country => <div key={country.name.common}>{country.name.official}</div>)}
+          {tempData.map(country => <div key={country.name.common}>{country.name.official}</div>)}
+        </div>
+        <div className='flex gap-5 flex-wrap'>
+          {numbers.map((number, index) => <button onClick={() => { setPaginationActivePage(index + 1) }} key={number} className="bg-blue-500 rounded-md p-5">{number}</button>)}
         </div>
       </main>
     </>
