@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { useState } from 'react';
 
 export async function getStaticProps() {
   let resp;
@@ -23,6 +24,10 @@ export async function getStaticProps() {
 }
 
 export default function Home({ data }) {
+  const [query, setQuery] = useState("");
+
+  console.log({ query })
+
   return (
     <>
       <Head>
@@ -31,7 +36,10 @@ export default function Home({ data }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main className="">
-        {JSON.stringify(data)}
+        <input type="search" value={query} onChange={(e) => {
+          setQuery(e.target.value)
+        }} />
+        {/* {JSON.stringify(data)} */}
       </main>
     </>
   )
