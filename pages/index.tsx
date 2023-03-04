@@ -63,7 +63,7 @@ export default function Home({ data }: Props) {
     numbers.push(i)
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     setPaginationActivePage(1)
   }, [query, regionFilter])
 
