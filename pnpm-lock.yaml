@@ -13,6 +13,7 @@ specifiers:
   prettier-plugin-tailwindcss: ^0.2.4
   react: 18.2.0
   react-dom: 18.2.0
+  react-paginate: ^8.1.4
   tailwindcss: ^3.2.7
   typescript: 4.9.5
 
@@ -25,6 +26,7 @@ dependencies:
   next: 13.2.1_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-paginate: 8.1.4_react@18.2.0
   typescript: 4.9.5
 
 devDependencies:
@@ -2872,6 +2874,18 @@ packages:
       {
         integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==,
       }
+    dev: false
+
+  /react-paginate/8.1.4_react@18.2.0:
+    resolution:
+      {
+        integrity: sha512-c3rxjcTEqeDQa6LqXifxLeFguY2qy2CHGRphVjHLFFMGfIHyaJ+v3bOvIlLYEeohwQ1q+cQpknjsqBVrkc/SNA==,
+      }
+    peerDependencies:
+      react: ^16 || ^17 || ^18
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.2.0
     dev: false
 
   /react/18.2.0:
