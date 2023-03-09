@@ -1,6 +1,7 @@
-import Head from 'next/head'
-import { useEffect, useState } from 'react';
-import { CountryData } from '@/types';
+import Head from "next/head";
+import { useEffect, useState } from "react";
+import { CountryData } from "@/types";
+import ReactPaginate from "react-paginate";
 
 export async function getStaticProps() {
   let resp;
@@ -8,64 +9,65 @@ export async function getStaticProps() {
   try {
     resp = await fetch("https://restcountries.com/v3.1/all");
   } catch (error) {
-    console.log("There was an error", error)
+    console.log("There was an error", error);
   }
 
   if (!resp?.ok) {
-    console.log(`there was an error, and the HTTP error code is ${resp?.status}`)
+    console.log(
+      `there was an error, and the HTTP error code is ${resp?.status}`
+    );
   }
 
-  const data = await resp?.json()
+  const data = await resp?.json();
 
   return {
     props: {
-      data: data
-    }
-  }
+      data: data,
+    },
+  };
 }
 
 interface Props {
-  data: CountryData[]
+  data: CountryData[];
 }
 
 export default function Home({ data }: Props) {
   const [query, setQuery] = useState(""); // state for query
-  const [regionFilter, setRegionFilter] = useState("") // state for region filter
+  const [regionFilter, setRegionFilter] = useState(""); // state for region filter
 
-  const [paginationActivePage, setPaginationActivePage] = useState(1)
-
+  const [paginationActivePage, setPaginationActivePage] = useState(1); // state for active pagination number
+  const [itemsPerPagination] = useState(12); // state for number of items in single page
 
   const filteredData = data.filter((country) => {
     // check if current country's region matches the selected region
     if (country.region.toLowerCase().includes(regionFilter.toLowerCase())) {
       // check if the country's name matches query
-      return (country.name.common.toLowerCase().includes(query.toLowerCase()) || country.name.official.toLowerCase().includes(query.toLowerCase()))
+      return (
+        country.name.common.toLowerCase().includes(query.toLowerCase()) ||
+        country.name.official.toLowerCase().includes(query.toLowerCase())
+      );
     } else {
       // if flase return false so that country get skipped
-      return false
+      return false;
     }
-  })
+  });
 
-  const itemsPerPagination = 12
+  const indexOfLastPost = paginationActivePage * itemsPerPagination; // index of last post in active page
+  const indexOfFirstPost = indexOfLastPost - itemsPerPagination; // index of first post in active page
+  const paginationLength = Math.ceil(filteredData.length / itemsPerPagination); // number of total pagination number
 
-  const paginationLength = Math.ceil(filteredData.length / itemsPerPagination)
+  const activePaginationData = filteredData.slice(
+    indexOfFirstPost,
+    indexOfLastPost
+  );
 
-  const indexOfLastPost = paginationActivePage * itemsPerPagination
-  const indexOfFirstPost = indexOfLastPost - itemsPerPagination
-
-  const tempData = filteredData.slice(indexOfFirstPost, indexOfLastPost)
-
-  console.log({ query, data, filteredData });
-
-  const numbers: number[] = []
-
-  for (let i = 1; i <= paginationLength; i++) {
-    numbers.push(i)
+  function paginate({ selected }: { selected: number }) {
+    setPaginationActivePage(selected + 1);
   }
 
   useEffect(() => {
-    setPaginationActivePage(1)
-  }, [query, regionFilter])
+    setPaginationActivePage(1);
+  }, [query, regionFilter]);
 
   return (
     <>
@@ -75,16 +77,34 @@ export default function Home({ data }: Props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main className="">
-        <input type="search" value={query} onChange={(e) => {
-          setQuery(e.target.value)
-        }} />
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+          }}
+        />
         <div>
-          {tempData.map(country => <div key={country.name.common}>{country.name.official}</div>)}
+          {activePaginationData.map((country) => (
+            <div key={country.name.common}>{country.name.official}</div>
+          ))}
         </div>
-        <div className='flex gap-5 flex-wrap'>
-          {numbers.map((number, index) => <button onClick={() => { setPaginationActivePage(index + 1) }} key={number} className="bg-blue-500 rounded-md p-5">{number}</button>)}
-        </div>
+        <ReactPaginate
+          onPageChange={paginate}
+          pageCount={paginationLength}
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={1}
+          previousLabel={"Prev"}
+          nextLabel={"Next"}
+          containerClassName={"flex gap-5 item-center justify-between"}
+          pageClassName={"bg-gray-400 rounded-full"}
+          pageLinkClassName={`p-2 inline-block rounded-full aspect-square w-10 text-center`}
+          previousLinkClassName={"p-2 inline-block bg-blue-500 rounded-md"}
+          nextLinkClassName={"p-2 inline-block bg-blue-500 rounded-md"}
+          activeLinkClassName={"bg-blue-500"}
+          breakClassName={"p-2"}
+        />
       </main>
     </>
-  )
+  );
 }
