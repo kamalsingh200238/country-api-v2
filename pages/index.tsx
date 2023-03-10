@@ -7,6 +7,7 @@ import { Fragment } from "react";
 import { Listbox, Switch, Transition } from "@headlessui/react";
 import { HiCheck, HiChevronUpDown } from "react-icons/hi2";
 import { BsFillMoonFill, BsSunFill } from "react-icons/bs";
+import Link from "next/link";
 
 export async function getStaticProps() {
   let resp;
@@ -93,7 +94,7 @@ export default function Home({ data }: Props) {
         <DropDown setRegionFilter={setRegionFilter} />
         <div className="">
           {activePaginationData.map((country) => (
-            <div key={country.name.common}>{country.name.official}</div>
+            <Link key={country.name.common} href={ `/country/${country.cca3}` } className='block'>{country.name.official}</Link>
           ))}
         </div>
         <ReactPaginate
