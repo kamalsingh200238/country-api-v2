@@ -191,7 +191,7 @@ function ThemeToggle() {
         className={`${enabled ? "bg-primary" : "bg-gray-200"}
           relative inline-flex h-8 w-16 shrink-0 items-center cursor-pointer rounded-full border-2 border-primary transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white  focus-visible:ring-opacity-75 dark:border-white`}
       >
-        <span className="sr-only">toggle theme</span>
+        <span className="sr-only">Theme Toggler</span>
         <span
           aria-hidden="true"
           className={`${
