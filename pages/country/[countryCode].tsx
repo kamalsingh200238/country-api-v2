@@ -1,5 +1,6 @@
 import { CountryData } from "@/types";
-import { GetStaticPropsContext } from "next";
+import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
 
 export async function getStaticPaths() {
@@ -24,7 +25,7 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps(context :GetStaticPropsContext) {
+export async function getStaticProps(context: GetStaticPropsContext) {
   let response;
   try {
     response = await fetch(
@@ -45,16 +46,23 @@ export async function getStaticProps(context :GetStaticPropsContext) {
   let resp;
 
   if (data[0].borders) {
-    resp = await Promise.all(
+    resp = (await Promise.all(
       data[0].borders?.map(async (border) => {
-      const resp = await fetch(
-        `https://restcountries.com/v3.1/alpha/${border}`
-      );
-      return await resp.json();
+        const resp = await fetch(
+          `https://restcountries.com/v3.1/alpha/${border}`
+        );
+        return (await resp.json())[0];
       })
-    );
+    )) as CountryData[];
   }
-  const borderCountries = resp?.map(item => item[0].name.common) ?? null
+
+  const borderCountries =
+    resp?.map((item) => {
+      return {
+        name: item.name.common,
+        cca3: item.cca3,
+      };
+    }) ?? null;
 
   return {
     props: {
@@ -67,13 +75,26 @@ export async function getStaticProps(context :GetStaticPropsContext) {
 export default function Page({
   data,
   borderCountries,
-}: {
-  data: CountryData;
-  borderCountries: string[];
-}) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const {
     query: { countryCode },
   } = useRouter();
+
   console.log({ data, borderCountries });
-  return <div>{data.name.official}</div>;
+
+  return (
+    <>
+      <div>{data.name.official}</div>
+      <div className="flex flex-col">
+        {borderCountries?.map((borderCountry) => (
+          <Link
+            key={borderCountry.cca3}
+            href={`/country/${borderCountry.cca3}`}
+          >
+            {borderCountry.name}
+          </Link>
+        ))}
+      </div>
+    </>
+  );
 }
