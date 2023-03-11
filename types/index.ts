@@ -4,6 +4,7 @@ export interface CountryData {
     official: string;
     nativeName?: {};
   };
+  borders?: string[];
   tld: string[];
   cca2: string;
   ccn3: string;
