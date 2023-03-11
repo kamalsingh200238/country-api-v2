@@ -1,4 +1,5 @@
 import { CountryData } from "@/types";
+import { GetStaticPropsContext } from "next";
 import { useRouter } from "next/router";
 
 export async function getStaticPaths() {
@@ -23,11 +24,11 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps(context) {
+export async function getStaticProps(context :GetStaticPropsContext) {
   let response;
   try {
     response = await fetch(
-      `https://restcountries.com/v3.1/alpha/${context.params.countryCode}`
+      `https://restcountries.com/v3.1/alpha/${context.params?.countryCode}`
     );
   } catch (error) {
     console.error("There was an error and", error);
