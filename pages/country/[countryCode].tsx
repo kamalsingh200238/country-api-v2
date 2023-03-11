@@ -40,7 +40,7 @@ export async function getStaticProps(context :GetStaticPropsContext) {
     );
   }
 
-  const data = (await response?.json()) as CountryData;
+  const data = (await response?.json()) as CountryData[];
 
   let resp;
 
