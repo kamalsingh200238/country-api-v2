@@ -96,41 +96,43 @@ export default function Home({ data }: Props) {
           </div>
         </div>
       </header>
-      <main className="dark:bg-purple-500">
-        <input
-          type="search"
-          value={query}
-          onChange={(e) => {
-            setQuery(e.target.value);
-          }}
-        />
-        <DropDown setRegionFilter={setRegionFilter} />
-        <div className="">
-          {activePaginationData.map((country) => (
-            <Link
-              key={country.name.common}
-              href={`/country/${country.cca3}`}
-              className="block"
-            >
-              {country.name.official}
-            </Link>
-          ))}
-        </div>
-        <ReactPaginate
-          onPageChange={paginate}
-          pageCount={paginationLength}
-          pageRangeDisplayed={3}
-          marginPagesDisplayed={1}
-          previousLabel={"Prev"}
-          nextLabel={"Next"}
-          containerClassName={"flex gap-5 item-center justify-between"}
-          pageClassName={"bg-gray-400 rounded-full"}
-          pageLinkClassName={`p-2 inline-block rounded-full aspect-square w-10 text-center`}
-          previousLinkClassName={"p-2 inline-block bg-blue-500 rounded-md"}
-          nextLinkClassName={"p-2 inline-block bg-blue-500 rounded-md"}
-          activeLinkClassName={"bg-blue-500"}
-          breakClassName={"p-2"}
-        />
+      <main className="">
+        <section className="py-8 dark:bg-primary">
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+            }}
+          />
+          <DropDown setRegionFilter={setRegionFilter} />
+          <div className="">
+            {activePaginationData.map((country) => (
+              <Link
+                key={country.name.common}
+                href={`/country/${country.cca3}`}
+                className="block"
+              >
+                {country.name.official}
+              </Link>
+            ))}
+          </div>
+          <ReactPaginate
+            onPageChange={paginate}
+            pageCount={paginationLength}
+            pageRangeDisplayed={1}
+            marginPagesDisplayed={1}
+            previousLabel={"<"}
+            nextLabel={">"}
+            containerClassName={"flex gap-2 item-center justify-between"}
+            pageClassName={"bg-gray-400 rounded-md"}
+            pageLinkClassName={`grid place-items-center rounded-md h-full p-2`}
+            previousLinkClassName={"rounded-md bg-blue-500 grid place-items-center h-full"}
+            nextLinkClassName={"rounded-md bg-blue-500 grid place-items-center h-full"}
+            activeLinkClassName={"bg-blue-500"}
+            breakClassName={"p-1"}
+          />
+        </section>
       </main>
     </>
   );
@@ -189,7 +191,7 @@ function ThemeToggle() {
         checked={enabled}
         onChange={setEnabled}
         className={`${enabled ? "bg-primary" : "bg-gray-200"}
-          relative inline-flex h-8 w-16 shrink-0 items-center cursor-pointer rounded-full border-2 border-primary transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white  focus-visible:ring-opacity-75 dark:border-white`}
+          relative inline-flex h-8 w-16 shrink-0 cursor-pointer items-center rounded-full border-2 border-primary transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white  focus-visible:ring-opacity-75 dark:border-white`}
       >
         <span className="sr-only">Theme Toggler</span>
         <span
