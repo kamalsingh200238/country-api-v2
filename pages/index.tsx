@@ -139,49 +139,28 @@ export default function Home({ data }: Props) {
 }
 
 function ThemeToggle() {
-  const [theme, setTheme] = useState<"dark" | "light">(() => {
-    if (typeof window !== "undefined") {
-      if (
-        localStorage.theme === "dark" ||
-        (!("theme" in localStorage) &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches)
-      ) {
-        return "dark";
-      } else {
-        return "light";
-      }
-    } else {
-      // if window is not defined that means we are on the server
-      // so retun "dark" mode as default
-      return "dark";
-    }
-  });
-
-  const [enabled, setEnabled] = useState(() => {
-    if (theme === "dark") {
-      return true;
-    } else {
-      return false;
-    }
-  });
+  const [theme, setTheme] = useState<"dark" | "light">("light");
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    if (theme === "light") {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      setEnabled(true);
     } else {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
+      setEnabled(false);
     }
-  }, [theme]);
+  }, []);
 
   useEffect(() => {
-    if (enabled) {
-      // if selcted is true that means dark mode is on
-      setTheme("dark");
-    } else {
-      // if selcted is false that means dark mode is on
+    if (!enabled) {
       setTheme("light");
+      document.documentElement.classList.remove("dark");
+    } else {
+      setTheme("dark");
+      document.documentElement.classList.add("dark");
     }
   }, [enabled]);
 
