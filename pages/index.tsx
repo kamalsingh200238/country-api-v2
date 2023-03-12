@@ -166,9 +166,11 @@ function ThemeToggle() {
     if (!enabled) {
       setTheme("light");
       document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light")
     } else {
       setTheme("dark");
       document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark")
     }
   }, [enabled]);
 
