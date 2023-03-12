@@ -98,7 +98,7 @@ export default function Home({ data }: Props) {
       </header>
       <main className="">
         <section className="py-8 px-5 dark:bg-primary">
-          <div className="flex flex-col justify-between gap-10 md:flex-row">
+          <div className="flex flex-col justify-between gap-10 md:flex-row md:gap-0">
             <input
               type="search"
               placeholder="Search for country"
@@ -233,10 +233,10 @@ function DropDown({
 
   return (
     <>
-      <div className="max-w-[256px]">
+      <div className="min-w-[14rem] max-w-[16rem]">
         <Listbox value={selected} onChange={setSelected}>
           <div className="relative">
-            <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+            <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300">
               <span className="block truncate">{selected.region}</span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <HiChevronUpDown
