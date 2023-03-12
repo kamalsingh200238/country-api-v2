@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CountryData } from "@/types";
 import ReactPaginate from "react-paginate";
 
@@ -149,28 +149,43 @@ export default function Home({ data }: Props) {
 function ThemeToggle() {
   const [theme, setTheme] = useState<"dark" | "light">("light");
   const [enabled, setEnabled] = useState(false);
+  const firstRender = useRef<boolean>(true);
 
   useEffect(() => {
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      setEnabled(true);
-    } else {
-      setEnabled(false);
+    // check if it is the first render
+    if (firstRender.current) {
+      // first render: true
+      // change firstRender to false
+      firstRender.current = !firstRender.current;
+      // check if localStorage.theme is dark OR (there is no theme in localStorage and at the same time user prefers dark theme)
+      if (
+        localStorage.theme === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        // setEnabled to true which means dark mode is on
+        setEnabled(true);
+      } else {
+        // setEnabled to flase which means dark mode is off
+        setEnabled(false);
+      }
     }
-  }, []);
 
-  useEffect(() => {
+    // check if enabled = flase
     if (!enabled) {
+      // set the theme to light
       setTheme("light");
+      // remove dark class from document
       document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light")
+      // add theme = "light" in localStorage
+      localStorage.setItem("theme", "light");
     } else {
+      // set the theme to dark
       setTheme("dark");
+      // add dark class in document
       document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark")
+      // add theme = "dark" in localStorage
+      localStorage.setItem("theme", "dark");
     }
   }, [enabled]);
 
@@ -185,9 +200,8 @@ function ThemeToggle() {
         <span className="sr-only">Theme Toggler</span>
         <span
           aria-hidden="true"
-          className={`${
-            enabled ? "translate-x-8" : "translate-x-0.5"
-          } pointer-events-none relative inline-block h-6 w-[26px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+          className={`${enabled ? "translate-x-8" : "translate-x-0.5"
+            } pointer-events-none relative inline-block h-6 w-[26px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
         ></span>
       </Switch>
     </>
@@ -242,8 +256,7 @@ function DropDown({
                   <Listbox.Option
                     key={regionIdx}
                     className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                        active ? "bg-amber-100 text-amber-900" : "text-gray-900"
+                      `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? "bg-amber-100 text-amber-900" : "text-gray-900"
                       }`
                     }
                     value={region}
@@ -251,9 +264,8 @@ function DropDown({
                     {({ selected }) => (
                       <>
                         <span
-                          className={`block truncate ${
-                            selected ? "font-bold" : "font-normal"
-                          }`}
+                          className={`block truncate ${selected ? "font-bold" : "font-normal"
+                            }`}
                         >
                           {region.region}
                         </span>
