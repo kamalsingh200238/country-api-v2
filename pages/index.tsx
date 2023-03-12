@@ -98,48 +98,50 @@ export default function Home({ data }: Props) {
       </header>
       <main className="">
         <section className="py-8 px-5 dark:bg-primary">
-          <div className="flex flex-col justify-between gap-10 md:flex-row md:gap-0">
-            <input
-              type="search"
-              placeholder="Search for country"
-              value={query}
-              onChange={(e) => {
-                setQuery(e.target.value);
-              }}
-              className="max-w-md rounded-md border-gray-300 shadow-lg dark:border-none dark:bg-secodary"
+          <div className="max-w-5xl mx-auto">
+            <div className="mb-10 flex flex-col justify-between gap-10 md:flex-row md:gap-0">
+              <input
+                type="search"
+                placeholder="Search for country"
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                }}
+                className="max-w-md rounded-md border-gray-300 shadow-lg dark:border-none dark:bg-secodary"
+              />
+              <DropDown setRegionFilter={setRegionFilter} />
+            </div>
+            <div className="">
+              {activePaginationData.map((country) => (
+                <Link
+                  key={country.name.common}
+                  href={`/country/${country.cca3}`}
+                  className="block"
+                >
+                  {country.name.official}
+                </Link>
+              ))}
+            </div>
+            <ReactPaginate
+              onPageChange={paginate}
+              pageCount={paginationLength}
+              pageRangeDisplayed={1}
+              marginPagesDisplayed={1}
+              previousLabel={"<"}
+              nextLabel={">"}
+              containerClassName={"flex gap-2 item-center justify-between"}
+              pageClassName={"bg-gray-400 rounded-md"}
+              pageLinkClassName={`grid place-items-center rounded-md h-full p-2`}
+              previousLinkClassName={
+                "rounded-md bg-blue-500 grid place-items-center h-full"
+              }
+              nextLinkClassName={
+                "rounded-md bg-blue-500 grid place-items-center h-full"
+              }
+              activeLinkClassName={"bg-blue-500"}
+              breakClassName={"p-1"}
             />
-            <DropDown setRegionFilter={setRegionFilter} />
           </div>
-          <div className="">
-            {activePaginationData.map((country) => (
-              <Link
-                key={country.name.common}
-                href={`/country/${country.cca3}`}
-                className="block"
-              >
-                {country.name.official}
-              </Link>
-            ))}
-          </div>
-          <ReactPaginate
-            onPageChange={paginate}
-            pageCount={paginationLength}
-            pageRangeDisplayed={1}
-            marginPagesDisplayed={1}
-            previousLabel={"<"}
-            nextLabel={">"}
-            containerClassName={"flex gap-2 item-center justify-between"}
-            pageClassName={"bg-gray-400 rounded-md"}
-            pageLinkClassName={`grid place-items-center rounded-md h-full p-2`}
-            previousLinkClassName={
-              "rounded-md bg-blue-500 grid place-items-center h-full"
-            }
-            nextLinkClassName={
-              "rounded-md bg-blue-500 grid place-items-center h-full"
-            }
-            activeLinkClassName={"bg-blue-500"}
-            breakClassName={"p-1"}
-          />
         </section>
       </main>
     </>
@@ -200,8 +202,9 @@ function ThemeToggle() {
         <span className="sr-only">Theme Toggler</span>
         <span
           aria-hidden="true"
-          className={`${enabled ? "translate-x-8" : "translate-x-0.5"
-            } pointer-events-none relative inline-block h-6 w-[26px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+          className={`${
+            enabled ? "translate-x-8" : "translate-x-0.5"
+          } pointer-events-none relative inline-block h-6 w-[26px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
         ></span>
       </Switch>
     </>
@@ -256,7 +259,8 @@ function DropDown({
                   <Listbox.Option
                     key={regionIdx}
                     className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? "bg-amber-100 text-amber-900" : "text-gray-900"
+                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                        active ? "bg-amber-100 text-amber-900" : "text-gray-900"
                       }`
                     }
                     value={region}
@@ -264,8 +268,9 @@ function DropDown({
                     {({ selected }) => (
                       <>
                         <span
-                          className={`block truncate ${selected ? "font-bold" : "font-normal"
-                            }`}
+                          className={`block truncate ${
+                            selected ? "font-bold" : "font-normal"
+                          }`}
                         >
                           {region.region}
                         </span>
