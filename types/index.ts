@@ -4,6 +4,9 @@ export interface CountryData {
     official: string;
     nativeName?: {};
   };
+  languages: {
+    [key: string]: string;
+  };
   population: number;
   borders?: string[];
   tld: string[];
