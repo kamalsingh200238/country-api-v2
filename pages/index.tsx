@@ -8,6 +8,8 @@ import { Listbox, Switch, Transition } from "@headlessui/react";
 import { HiCheck, HiChevronUpDown } from "react-icons/hi2";
 import { BsFillMoonFill, BsSunFill } from "react-icons/bs";
 import Link from "next/link";
+import Image from "next/image";
+import CardDetail from "@/components/CardDetail";
 
 export async function getStaticProps() {
   let resp;
@@ -98,7 +100,7 @@ export default function Home({ data }: Props) {
       </header>
       <main className="">
         <section className="py-8 px-5 dark:bg-primary">
-          <div className="max-w-5xl mx-auto">
+          <div className="mx-auto max-w-6xl">
             <div className="mb-10 flex flex-col justify-between gap-10 md:flex-row md:gap-0">
               <input
                 type="search"
@@ -111,36 +113,59 @@ export default function Home({ data }: Props) {
               />
               <DropDown setRegionFilter={setRegionFilter} />
             </div>
-            <div className="">
-              {activePaginationData.map((country) => (
-                <Link
-                  key={country.name.common}
-                  href={`/country/${country.cca3}`}
-                  className="block"
-                >
-                  {country.name.official}
-                </Link>
-              ))}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-14">
+              {activePaginationData.map((country) => {
+                const capital = country?.capital?.[0] ?? "";
+                return (
+                  <Link
+                    key={country.name.common}
+                    href={`/country/${country.cca3}`}
+                    className="block overflow-clip rounded-md shadow-lg hover:scale-105 transition-all duration-200"
+                  >
+                    <div className="">
+                      <div className="relative isolate aspect-video w-full">
+                        <Image
+                          src={country.flags.svg}
+                          alt={`Flag of ${country.name.common}`}
+                          fill={true}
+                          className="object-cover rounded-md"
+                        />
+                      </div>
+                      <div className="px-5 py-8">
+                        <p className="text-lg font-bold mb-2">{country.name.common}</p>
+                        <CardDetail
+                          detail="Population"
+                          value={country.population.toLocaleString("en-US")}
+                        />
+                        <CardDetail detail="Region" value={country.region} />
+                        <CardDetail detail="Capital" value={capital} />
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
+            <div className="py-14 max-w-full">
             <ReactPaginate
               onPageChange={paginate}
               pageCount={paginationLength}
-              pageRangeDisplayed={1}
+              pageRangeDisplayed={2}
               marginPagesDisplayed={1}
               previousLabel={"<"}
               nextLabel={">"}
-              containerClassName={"flex gap-2 item-center justify-between"}
+              containerClassName={"flex gap-2 flex-wrap item-center justify-center sm:gap-5"}
               pageClassName={"bg-gray-400 rounded-md"}
               pageLinkClassName={`grid place-items-center rounded-md h-full p-2`}
               previousLinkClassName={
-                "rounded-md bg-blue-500 grid place-items-center h-full"
+                "rounded-md bg-blue-500 grid place-items-center h-full p-2"
               }
               nextLinkClassName={
-                "rounded-md bg-blue-500 grid place-items-center h-full"
+                "rounded-md bg-blue-500 grid place-items-center h-full p-2"
               }
               activeLinkClassName={"bg-blue-500"}
               breakClassName={"p-1"}
             />
+            </div>
           </div>
         </section>
       </main>
@@ -202,9 +227,8 @@ function ThemeToggle() {
         <span className="sr-only">Theme Toggler</span>
         <span
           aria-hidden="true"
-          className={`${
-            enabled ? "translate-x-8" : "translate-x-0.5"
-          } pointer-events-none relative inline-block h-6 w-[26px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+          className={`${enabled ? "translate-x-8" : "translate-x-0.5"
+            } pointer-events-none relative inline-block h-6 w-[26px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
         ></span>
       </Switch>
     </>
@@ -254,13 +278,12 @@ function DropDown({
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              <Listbox.Options className="absolute z-40 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {regions.map((region, regionIdx) => (
                   <Listbox.Option
                     key={regionIdx}
                     className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                        active ? "bg-amber-100 text-amber-900" : "text-gray-900"
+                      `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? "bg-amber-100 text-amber-900" : "text-gray-900"
                       }`
                     }
                     value={region}
@@ -268,9 +291,8 @@ function DropDown({
                     {({ selected }) => (
                       <>
                         <span
-                          className={`block truncate ${
-                            selected ? "font-bold" : "font-normal"
-                          }`}
+                          className={`block truncate ${selected ? "font-bold" : "font-normal"
+                            }`}
                         >
                           {region.region}
                         </span>
