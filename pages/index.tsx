@@ -113,7 +113,7 @@ export default function Home({ data }: Props) {
                           src={country.flags.svg}
                           alt={`Flag of ${country.name.common}`}
                           fill={true}
-                          className="rounded-md object-cover"
+                          className="object-cover"
                         />
                       </div>
                       <div className="px-5 py-8">
