@@ -84,7 +84,7 @@ export default function Home({ data }: Props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main className="">
-        <section className="py-8 px-5 dark:bg-primary">
+        <section className="py-8 px-5 md:px-10 dark:bg-primary">
           <div className="mx-auto max-w-7xl">
             <div className="mb-10 flex flex-col justify-between gap-10 md:flex-row md:gap-0">
               <input
@@ -94,18 +94,18 @@ export default function Home({ data }: Props) {
                 onChange={(e) => {
                   setQuery(e.target.value);
                 }}
-                className="max-w-md rounded-md border-gray-300 shadow-lg dark:border-none dark:bg-secondary"
+                className="max-w-md rounded-md border-gray-300 shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-opacity-75 dark:border-none dark:bg-secondary"
               />
               <DropDown setRegionFilter={setRegionFilter} />
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-14">
+            <div className="grid grid-cols-1 gap-14 sm:grid-cols-2 lg:grid-cols-4">
               {activePaginationData.map((country) => {
                 const capital = country?.capital?.[0] ?? "";
                 return (
                   <Link
                     key={country.name.common}
                     href={`/country/${country.cca3}`}
-                    className="block overflow-clip rounded-md shadow-lg hover:scale-105 transition-all duration-200"
+                    className="block overflow-clip rounded-md shadow-lg transition-all duration-200 hover:scale-105"
                   >
                     <div className="">
                       <div className="relative isolate aspect-video w-full">
@@ -113,11 +113,13 @@ export default function Home({ data }: Props) {
                           src={country.flags.svg}
                           alt={`Flag of ${country.name.common}`}
                           fill={true}
-                          className="object-cover rounded-md"
+                          className="rounded-md object-cover"
                         />
                       </div>
                       <div className="px-5 py-8">
-                        <p className="text-lg font-bold mb-2">{country.name.common}</p>
+                        <p className="mb-2 text-lg font-bold">
+                          {country.name.common}
+                        </p>
                         <CardDetail
                           detail="Population"
                           value={country.population.toLocaleString("en-US")}
@@ -130,26 +132,28 @@ export default function Home({ data }: Props) {
                 );
               })}
             </div>
-            <div className="py-14 max-w-full">
-            <ReactPaginate
-              onPageChange={paginate}
-              pageCount={paginationLength}
-              pageRangeDisplayed={2}
-              marginPagesDisplayed={1}
-              previousLabel={"<"}
-              nextLabel={">"}
-              containerClassName={"flex gap-2 flex-wrap item-center justify-center sm:gap-5"}
-              pageClassName={"bg-gray-400 rounded-md"}
-              pageLinkClassName={`grid place-items-center rounded-md h-full p-2`}
-              previousLinkClassName={
-                "rounded-md bg-blue-500 grid place-items-center h-full p-2"
-              }
-              nextLinkClassName={
-                "rounded-md bg-blue-500 grid place-items-center h-full p-2"
-              }
-              activeLinkClassName={"bg-blue-500"}
-              breakClassName={"p-1"}
-            />
+            <div className="max-w-full py-14">
+              <ReactPaginate
+                onPageChange={paginate}
+                pageCount={paginationLength}
+                pageRangeDisplayed={2}
+                marginPagesDisplayed={1}
+                previousLabel={"<"}
+                nextLabel={">"}
+                containerClassName={
+                  "flex gap-2 flex-wrap item-center justify-center sm:gap-5"
+                }
+                pageClassName={"bg-gray-400 rounded-md"}
+                pageLinkClassName={`grid place-items-center rounded-md h-full p-2`}
+                previousLinkClassName={
+                  "rounded-md bg-blue-500 grid place-items-center h-full p-2"
+                }
+                nextLinkClassName={
+                  "rounded-md bg-blue-500 grid place-items-center h-full p-2"
+                }
+                activeLinkClassName={"bg-blue-500"}
+                breakClassName={"p-1"}
+              />
             </div>
           </div>
         </section>
@@ -159,7 +163,7 @@ export default function Home({ data }: Props) {
 }
 
 const regions = [
-  { region: "none", value: "" },
+  { region: "None", value: "" },
   { region: "Americas", value: "Americas" },
   { region: "Asia", value: "Asia" },
   { region: "Africa", value: "Africa" },
@@ -186,8 +190,10 @@ function DropDown({
       <div className="min-w-[14rem] max-w-[16rem]">
         <Listbox value={selected} onChange={setSelected}>
           <div className="relative">
-            <Listbox.Button className="relative w-full cursor-default rounded-lg py-2 pl-3 pr-10 text-left shadow-md border border-gray-300 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300">
-              <span className="block truncate">{selected.region}</span>
+            <Listbox.Button className="relative w-full cursor-default rounded-lg border border-gray-300 py-2 pl-3 pr-10 text-left shadow-lg focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300">
+              <span className="block truncate capitalize">
+                {selected.value === "" ? "Filter by Region" : selected.region}
+              </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <HiChevronUpDown
                   className="h-5 w-5 text-gray-400"
@@ -206,7 +212,8 @@ function DropDown({
                   <Listbox.Option
                     key={regionIdx}
                     className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? "bg-amber-100 text-amber-900" : "text-gray-900"
+                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                        active ? "bg-amber-100 text-amber-900" : "text-gray-900"
                       }`
                     }
                     value={region}
@@ -214,8 +221,9 @@ function DropDown({
                     {({ selected }) => (
                       <>
                         <span
-                          className={`block truncate ${selected ? "font-bold" : "font-normal"
-                            }`}
+                          className={`block truncate ${
+                            selected ? "font-bold" : "font-normal"
+                          }`}
                         >
                           {region.region}
                         </span>

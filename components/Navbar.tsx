@@ -5,8 +5,8 @@ import { BsFillMoonFill, BsSunFill } from "react-icons/bs";
 
 export default function Navbar() {
   return (
-    <header className="flex h-24 items-center justify-between px-6 shadow-md dark:bg-secondary md:px-12">
-      <Link href={"/"} className="dark:text-white">
+    <header className="flex h-24 items-center justify-between px-6 shadow-lg dark:bg-secondary md:px-12">
+      <Link href={"/"} className="dark:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
         World Wise
       </Link>
       <div className="flex items-center gap-2">
@@ -71,7 +71,7 @@ export function ThemeToggle() {
         checked={enabled}
         onChange={setEnabled}
         className={`${enabled ? "bg-primary" : "bg-gray-200"}
-          relative inline-flex h-8 w-16 shrink-0 cursor-pointer items-center rounded-full border-2 border-secondary transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-opacity-75 dark:border-white`}
+          relative inline-flex h-8 w-16 shrink-0 cursor-pointer items-center rounded-full border-2 border-secondary transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:focus-visible:ring-white focus-visible:ring-opacity-75 dark:border-white`}
       >
         <span className="sr-only">Theme Toggler</span>
         <span
