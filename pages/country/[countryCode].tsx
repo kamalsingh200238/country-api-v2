@@ -135,54 +135,69 @@ export default function Page({
 
   return (
     <>
-      <div className="grid items-center lg:grid-cols-2">
-        <div className="relative aspect-video w-full">
-          <Image
-            src={data.flags.svg}
-            fill={true}
-            alt={`Falg of ${data.name.common}`}
-          />
-        </div>
-        <div className="">
-          <div>{data.name.official}</div>
-          <div>
-            <CardDetail
-              detail="Population"
-              value={data.population.toLocaleString("en-US")}
-            />
-            <CardDetail detail="Region" value={data.region} />
-            <CardDetail detail="Subregion" value={data.subregion} />
-            <CardDetail detail="Capital" value={data.capital.join(", ")} />
+      <main className="">
+        <section className="px-5 py-12">
+          <div className="mx-auto max-w-7xl">
+            <div className="grid items-center lg:grid-cols-2 gap-10">
+              <div className="relative aspect-video w-full">
+                <Image
+                  src={data.flags.svg}
+                  fill={true}
+                  alt={data.flags.alt}
+                  className="object-cover"
+                />
+              </div>
+              <div className="px-5">
+                <h1 className="mb-5 text-2xl font-bold">
+                  {data.name.official}
+                </h1>
+                <div className="flex flex-col justify-between gap-3 md:flex-row mb-5">
+                  <div>
+                    <CardDetail
+                      detail="Population"
+                      value={data.population.toLocaleString("en-US")}
+                    />
+                    <CardDetail detail="Region" value={data.region} />
+                    <CardDetail detail="Subregion" value={data.subregion} />
+                    <CardDetail
+                      detail="Capital"
+                      value={data.capital.join(", ")}
+                    />
+                  </div>
+                  <div>
+                    <CardDetail
+                      detail="Top level domain"
+                      value={data?.tld?.[0] ?? ""}
+                    />
+                    <CardDetail
+                      detail="Currencies"
+                      value={getCurrencies(data.currencies)}
+                    />
+                    <CardDetail
+                      detail="Languages"
+                      value={getLanguages(data.languages)}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col gap-3 md:flex-row md:items-center">
+                  <h2 className="">Border Countries: </h2>
+                  <div className="flex flex-wrap gap-5">
+                    {borderCountries?.map((borderCountry) => (
+                      <Link
+                        key={borderCountry.cca3}
+                        href={`/country/${borderCountry.cca3}`}
+                        className="inline-block rounded-md border border-gray-500 px-5 py-2 transition-all duration-200 hover:scale-105"
+                      >
+                        {borderCountry.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div>
-            <CardDetail
-              detail="Top level domain"
-              value={data?.tld?.[0] ?? ""}
-            />
-            <CardDetail
-              detail="Currencies"
-              value={getCurrencies(data.currencies)}
-            />
-            <CardDetail
-              detail="Languages"
-              value={getLanguages(data.languages)}
-            />
-          </div>
-          <div>
-            <h2>Border Countries: </h2>
-          </div>
-          <div className="flex flex-wrap gap-5">
-            {borderCountries?.map((borderCountry) => (
-              <Link
-                key={borderCountry.cca3}
-                href={`/country/${borderCountry.cca3}`}
-              >
-                {borderCountry.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
+        </section>
+      </main>
     </>
   );
 }
