@@ -138,7 +138,7 @@ export default function Page({
       <main className="">
         <section className="px-5 py-12">
           <div className="mx-auto max-w-7xl">
-            <div className="grid items-center lg:grid-cols-2 gap-10">
+            <div className="grid items-center gap-10 lg:grid-cols-2">
               <div className="relative aspect-video w-full">
                 <Image
                   src={data.flags.svg}
@@ -151,7 +151,7 @@ export default function Page({
                 <h1 className="mb-5 text-2xl font-bold">
                   {data.name.official}
                 </h1>
-                <div className="flex flex-col justify-between gap-3 md:flex-row mb-5">
+                <div className="mb-5 flex flex-col justify-between gap-3 md:flex-row">
                   <div>
                     <CardDetail
                       detail="Population"

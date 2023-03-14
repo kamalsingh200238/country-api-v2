@@ -84,7 +84,7 @@ export default function Home({ data }: Props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main className="">
-        <section className="py-8 px-5 md:px-10 dark:bg-primary">
+        <section className="py-8 px-5 dark:bg-primary md:px-10">
           <div className="mx-auto max-w-7xl">
             <div className="mb-10 flex flex-col justify-between gap-10 md:flex-row md:gap-0">
               <input
@@ -94,7 +94,7 @@ export default function Home({ data }: Props) {
                 onChange={(e) => {
                   setQuery(e.target.value);
                 }}
-                className="max-w-md rounded-md border-gray-300 shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-opacity-75 dark:border-none dark:bg-secondary"
+                className="max-w-md rounded-md border-gray-300 shadow-lg focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-opacity-75 dark:border-none dark:bg-secondary"
               />
               <DropDown setRegionFilter={setRegionFilter} />
             </div>
@@ -105,7 +105,7 @@ export default function Home({ data }: Props) {
                   <Link
                     key={country.name.common}
                     href={`/country/${country.cca3}`}
-                    className="block overflow-clip rounded-md shadow-lg transition-all duration-200 hover:scale-105"
+                    className="block overflow-clip rounded-md shadow-lg transition-all duration-200 hover:scale-105 focus:border-primary focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-opacity-75"
                   >
                     <div className="">
                       <div className="relative isolate aspect-video w-full">
@@ -190,7 +190,7 @@ function DropDown({
       <div className="min-w-[14rem] max-w-[16rem]">
         <Listbox value={selected} onChange={setSelected}>
           <div className="relative">
-            <Listbox.Button className="relative w-full cursor-default rounded-lg border border-gray-300 py-2 pl-3 pr-10 text-left shadow-lg focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300">
+            <Listbox.Button className="relative w-full cursor-default rounded-lg border border-gray-300 py-2 pl-3 pr-10 text-left shadow-lg focus:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary">
               <span className="block truncate capitalize">
                 {selected.value === "" ? "Filter by Region" : selected.region}
               </span>

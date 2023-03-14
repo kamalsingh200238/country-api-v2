@@ -6,7 +6,10 @@ import { BsFillMoonFill, BsSunFill } from "react-icons/bs";
 export default function Navbar() {
   return (
     <header className="flex h-24 items-center justify-between px-6 shadow-lg dark:bg-secondary md:px-12">
-      <Link href={"/"} className="dark:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+      <Link
+        href={"/"}
+        className="inline-block rounded-md px-5 py-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:text-white"
+      >
         World Wise
       </Link>
       <div className="flex items-center gap-2">
@@ -14,7 +17,7 @@ export default function Navbar() {
           <BsSunFill />
         </div>
         <ThemeToggle />
-        <div className="text-xl dark:text-white text-secondary">
+        <div className="text-xl text-secondary dark:text-white">
           <BsFillMoonFill />
         </div>
       </div>
@@ -71,13 +74,14 @@ export function ThemeToggle() {
         checked={enabled}
         onChange={setEnabled}
         className={`${enabled ? "bg-primary" : "bg-gray-200"}
-          relative inline-flex h-8 w-16 shrink-0 cursor-pointer items-center rounded-full border-2 border-secondary transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:focus-visible:ring-white focus-visible:ring-opacity-75 dark:border-white`}
+          relative inline-flex h-8 w-16 shrink-0 cursor-pointer items-center rounded-full border-2 border-gray-200 transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-opacity-75 dark:border-white dark:focus-visible:ring-white`}
       >
         <span className="sr-only">Theme Toggler</span>
         <span
           aria-hidden="true"
-          className={`${enabled ? "translate-x-8" : "translate-x-0.5"
-            } pointer-events-none relative inline-block h-6 w-[26px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+          className={`${
+            enabled ? "translate-x-8" : "translate-x-0.5"
+          } pointer-events-none relative inline-block h-6 w-[26px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
         ></span>
       </Switch>
     </>

@@ -13,15 +13,13 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#202c37"
+          DEFAULT: "#202c37",
         },
         secondary: {
-          DEFAULT: "#2b3945"
-        }
-      }
+          DEFAULT: "#2b3945",
+        },
+      },
     },
   },
-  plugins: [
-    require("@tailwindcss/forms")
-  ],
+  plugins: [require("@tailwindcss/forms")],
 };
