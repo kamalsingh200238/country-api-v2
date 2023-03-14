@@ -33,5 +33,6 @@ export interface CountryData {
   flags: {
     svg: string;
     png: string;
+    alt: string;
   };
 }
