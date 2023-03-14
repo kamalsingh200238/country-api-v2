@@ -135,39 +135,52 @@ export default function Page({
 
   return (
     <>
-      <div className="grid lg:grid-cols-2">
-        <div className="relative aspect-video w-40">
+      <div className="grid items-center lg:grid-cols-2">
+        <div className="relative aspect-video w-full">
           <Image
             src={data.flags.svg}
             fill={true}
             alt={`Falg of ${data.name.common}`}
           />
         </div>
-      </div>
-      <div className="">
-        <div>{data.name.official}</div>
-        <CardDetail
-          detail="Population"
-          value={data.population.toLocaleString("en-US")}
-        />
-        <CardDetail detail="Top level domain" value={data?.tld?.[0] ?? ""} />
-        <CardDetail detail="Region" value={data.region} />
-        <CardDetail detail="Subregion" value={data.subregion} />
-        <CardDetail detail="Languages" value={getLanguages(data.languages)} />
-        <CardDetail detail="Capital" value={data.capital.join(", ")} />
-        <CardDetail
-          detail="Currencies"
-          value={getCurrencies(data.currencies)}
-        />
-        <div className="flex gap-5 flex-wrap">
-          {borderCountries?.map((borderCountry) => (
-            <Link
-              key={borderCountry.cca3}
-              href={`/country/${borderCountry.cca3}`}
-            >
-              {borderCountry.name}
-            </Link>
-          ))}
+        <div className="">
+          <div>{data.name.official}</div>
+          <div>
+            <CardDetail
+              detail="Population"
+              value={data.population.toLocaleString("en-US")}
+            />
+            <CardDetail detail="Region" value={data.region} />
+            <CardDetail detail="Subregion" value={data.subregion} />
+            <CardDetail detail="Capital" value={data.capital.join(", ")} />
+          </div>
+          <div>
+            <CardDetail
+              detail="Top level domain"
+              value={data?.tld?.[0] ?? ""}
+            />
+            <CardDetail
+              detail="Currencies"
+              value={getCurrencies(data.currencies)}
+            />
+            <CardDetail
+              detail="Languages"
+              value={getLanguages(data.languages)}
+            />
+          </div>
+          <div>
+            <h2>Border Countries: </h2>
+          </div>
+          <div className="flex flex-wrap gap-5">
+            {borderCountries?.map((borderCountry) => (
+              <Link
+                key={borderCountry.cca3}
+                href={`/country/${borderCountry.cca3}`}
+              >
+                {borderCountry.name}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </>
