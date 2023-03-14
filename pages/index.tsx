@@ -85,7 +85,7 @@ export default function Home({ data }: Props) {
       </Head>
       <main className="">
         <section className="py-8 px-5 dark:bg-primary">
-          <div className="mx-auto max-w-6xl">
+          <div className="mx-auto max-w-7xl">
             <div className="mb-10 flex flex-col justify-between gap-10 md:flex-row md:gap-0">
               <input
                 type="search"
@@ -94,7 +94,7 @@ export default function Home({ data }: Props) {
                 onChange={(e) => {
                   setQuery(e.target.value);
                 }}
-                className="max-w-md rounded-md border-gray-300 shadow-lg dark:border-none dark:bg-secodary"
+                className="max-w-md rounded-md border-gray-300 shadow-lg dark:border-none dark:bg-secondary"
               />
               <DropDown setRegionFilter={setRegionFilter} />
             </div>
@@ -186,7 +186,7 @@ function DropDown({
       <div className="min-w-[14rem] max-w-[16rem]">
         <Listbox value={selected} onChange={setSelected}>
           <div className="relative">
-            <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300">
+            <Listbox.Button className="relative w-full cursor-default rounded-lg py-2 pl-3 pr-10 text-left shadow-md border border-gray-300 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300">
               <span className="block truncate">{selected.region}</span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <HiChevronUpDown
