@@ -143,7 +143,7 @@ export default function Page({
                 <Image
                   src={data.flags.svg}
                   fill={true}
-                  alt={data.flags.alt}
+                  alt={{data.flags?.alt ?? `Flag of ${data.name.common}`}}
                   className="object-cover"
                 />
               </div>

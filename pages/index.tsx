@@ -84,7 +84,7 @@ export default function Home({ data }: Props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main className="">
-        <section className="py-8 px-5 dark:bg-primary md:px-10">
+        <section className="py-8 px-5 dark:bg-primary dark:text-white md:px-10">
           <div className="mx-auto max-w-7xl">
             <div className="mb-10 flex flex-col justify-between gap-10 md:flex-row md:gap-0">
               <input
@@ -94,7 +94,7 @@ export default function Home({ data }: Props) {
                 onChange={(e) => {
                   setQuery(e.target.value);
                 }}
-                className="max-w-md rounded-md border-gray-300 shadow-lg focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-opacity-75 dark:border-none dark:bg-secondary"
+                className="max-w-md rounded-md border border-gray-300 dark:text-white shadow-lg focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:border-none dark:bg-secondary dark:placeholder:text-white/50 dark:focus:border-white dark:focus-visible:ring-white"
               />
               <DropDown setRegionFilter={setRegionFilter} />
             </div>
@@ -105,19 +105,19 @@ export default function Home({ data }: Props) {
                   <Link
                     key={country.name.common}
                     href={`/country/${country.cca3}`}
-                    className="block overflow-clip rounded-md shadow-lg transition-all duration-200 hover:scale-105 focus:border-primary focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-opacity-75"
+                    className="block overflow-clip rounded-md shadow-lg transition-all duration-200 hover:scale-105 focus:outline-none focus-visible:ring-4 focus-visible:ring-primary dark:focus-visible:ring-white"
                   >
                     <div className="">
                       <div className="relative isolate aspect-video w-full">
                         <Image
                           src={country.flags.svg}
-                          alt={`Flag of ${country.name.common}`}
+                          alt={country.flags?.alt ?? `Flag of ${country.name.common}`}
                           fill={true}
                           className="object-cover"
                         />
                       </div>
-                      <div className="px-5 py-8">
-                        <p className="mb-2 text-lg font-bold">
+                      <div className="px-5 py-8 dark:bg-secondary">
+                        <p className="mb-2 text-lg font-bold lg:text-xl">
                           {country.name.common}
                         </p>
                         <CardDetail
@@ -190,13 +190,13 @@ function DropDown({
       <div className="min-w-[14rem] max-w-[16rem]">
         <Listbox value={selected} onChange={setSelected}>
           <div className="relative">
-            <Listbox.Button className="relative w-full cursor-default rounded-lg border border-gray-300 py-2 pl-3 pr-10 text-left shadow-lg focus:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary">
+            <Listbox.Button className="relative w-full cursor-default rounded-lg border border-gray-300 py-2 pl-3 pr-10 text-left shadow-lg focus:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary dark:border-transparent dark:bg-secondary dark:focus-visible:border-white dark:focus-visible:ring-white">
               <span className="block truncate capitalize">
                 {selected.value === "" ? "Filter by Region" : selected.region}
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <HiChevronUpDown
-                  className="h-5 w-5 text-gray-400"
+                  className="h-5 w-5 text-gray-400 dark:text-white"
                   aria-hidden="true"
                 />
               </span>
@@ -207,13 +207,19 @@ function DropDown({
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute z-40 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              <Listbox.Options className="absolute z-40 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-secondary sm:text-sm">
                 {regions.map((region, regionIdx) => (
                   <Listbox.Option
                     key={regionIdx}
-                    className={({ active }) =>
+                    className={({ active, selected }) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                        active ? "bg-amber-100 text-amber-900" : "text-gray-900"
+                        selected
+                          ? "bg-blue-100 text-blue-900 dark:text-blue-900"
+                          : "text-gray-900 dark:text-white"
+                      } ${
+                        active && !selected
+                          ? "bg-amber-100 text-amber-900 dark:text-amber-900"
+                          : ""
                       }`
                     }
                     value={region}
@@ -228,8 +234,11 @@ function DropDown({
                           {region.region}
                         </span>
                         {selected ? (
-                          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                            <HiCheck className="h-5 w-5" aria-hidden="true" />
+                          <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                            <HiCheck
+                              className="h-5 w-5 font-bold text-blue-500"
+                              aria-hidden="true"
+                            />
                           </span>
                         ) : null}
                       </>
