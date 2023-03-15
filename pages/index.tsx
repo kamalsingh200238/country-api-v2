@@ -141,18 +141,18 @@ export default function Home({ data }: Props) {
                 previousLabel={"<"}
                 nextLabel={">"}
                 containerClassName={
-                  "flex gap-2 flex-wrap item-center justify-center sm:gap-5"
+                  "flex flex-wrap item-center justify-center mx-auto text-slate-100"
                 }
-                pageClassName={"bg-gray-400 rounded-md"}
-                pageLinkClassName={`grid place-items-center rounded-md h-full p-2`}
                 previousLinkClassName={
-                  "rounded-md bg-blue-500 grid place-items-center h-full p-2"
+                  "bg-slate-900 grid place-items-center h-full p-2 rounded-l-md border-r border-r-white"
                 }
+                pageClassName={"bg-slate-900"}
+                pageLinkClassName={"grid place-items-center h-full p-2"}
+                activeLinkClassName={"bg-blue-600"}
+                breakClassName={"p-1 bg-gray-400 text-gray-900"}
                 nextLinkClassName={
-                  "rounded-md bg-blue-500 grid place-items-center h-full p-2"
+                  "grid place-items-center h-full p-2 rounded-r-md bg-slate-900 border-l border-l-white"
                 }
-                activeLinkClassName={"bg-blue-500"}
-                breakClassName={"p-1"}
               />
             </div>
           </div>
