@@ -97,7 +97,7 @@ export default function Home({ data }: Props) {
                     href={`/country/${country.cca3}`}
                     className="block overflow-clip rounded-md shadow-lg transition-all duration-200 hover:scale-105 focus:outline-none focus-visible:ring-4 focus-visible:ring-primary dark:focus-visible:ring-white"
                   >
-                    <div className="">
+                    <div className="h-full dark:bg-secondary">
                       <div className="relative isolate aspect-video w-full">
                         <Image
                           src={country.flags.svg}
@@ -109,7 +109,7 @@ export default function Home({ data }: Props) {
                           className="object-cover"
                         />
                       </div>
-                      <div className="px-5 py-8 dark:bg-secondary">
+                      <div className="px-5 py-8">
                         <p className="mb-2 text-lg font-bold lg:text-xl">
                           {country.name.common}
                         </p>
