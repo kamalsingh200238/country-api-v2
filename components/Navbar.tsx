@@ -8,7 +8,7 @@ export default function Navbar() {
     <header className="flex h-24 items-center justify-between px-6 shadow-lg dark:bg-secondary md:px-12">
       <Link
         href={"/"}
-        className="inline-block rounded-md py-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:text-white dark:focus-visible:ring-white"
+        className="inline-block rounded-md py-2 transition-all duration-200 hover:text-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:text-white dark:hover:text-white/50 dark:focus-visible:ring-white"
       >
         World Wise
       </Link>
