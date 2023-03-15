@@ -4,7 +4,7 @@ import type { AppProps } from "next/app";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className="min-h-screen dark:bg-primary">
+    <div className="min-h-screen transition-colors duration-200 dark:bg-primary">
       <Navbar />
       <Component {...pageProps} />
     </div>
