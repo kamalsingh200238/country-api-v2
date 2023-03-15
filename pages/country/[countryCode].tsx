@@ -136,7 +136,7 @@ export default function Page({
   return (
     <>
       <main className="">
-        <section className="px-5 py-12">
+        <section className="px-5 py-12 dark:text-white">
           <div className="mx-auto max-w-7xl">
             <div className="grid items-center gap-10 lg:grid-cols-2">
               <div className="relative aspect-video w-full">
@@ -186,7 +186,7 @@ export default function Page({
                       <Link
                         key={borderCountry.cca3}
                         href={`/country/${borderCountry.cca3}`}
-                        className="inline-block rounded-md border border-gray-500 px-5 py-2 transition-all duration-200 hover:scale-105"
+                        className="inline-block rounded-md border border-gray-300 dark:border-transparent dark:bg-secondary shadow-lg px-5 py-2 transition-all duration-200 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:focus-visible:ring-white"
                       >
                         {borderCountry.name}
                       </Link>

@@ -212,13 +212,13 @@ function DropDown({
                   <Listbox.Option
                     key={regionIdx}
                     className={({ active, selected }) =>
-                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                      `relative cursor-default select-none py-2 pl-10 pr-4 dark:text-white ${
                         selected
-                          ? "bg-blue-100 text-blue-900 dark:text-blue-900"
-                          : "text-gray-900 dark:text-white"
+                          ? "bg-blue-100 !text-blue-900 dark:!text-blue-900"
+                          : ""
                       } ${
                         active && !selected
-                          ? "bg-amber-100 text-amber-900 dark:text-amber-900"
+                          ? "bg-amber-100 !text-amber-900 dark:!text-amber-900"
                           : ""
                       }`
                     }
